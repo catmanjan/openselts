@@ -1,3 +1,14 @@
 $credentials = Get-Credential
 $unistats = Invoke-WebRequest -Uri "https://unistats.anu.edu.au/internal/surveys/selt/learning/time-series/" -Credential $credentials
-$unistats.Links | Select href
+
+ForEach ($link in $unistats.Links) 
+{
+    $href = 'https://unistats.anu.edu.au';
+    $href += $link.href;
+
+    if($href -match '\.pdf\b')
+    {
+        $filename = Split-Path $href -Leaf
+        Invoke-WebRequest $href -OutFile $filename -Credential $credentials
+    }
+}
