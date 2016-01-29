@@ -1,0 +1,3 @@
+$credentials = Get-Credential
+$unistats = Invoke-WebRequest -Uri "https://unistats.anu.edu.au/internal/surveys/selt/learning/time-series/" -Credential $credentials
+$unistats.Links | Select href
